@@ -13,7 +13,7 @@
     </h2>
     {#过滤器#}
     <p>总共{{ movies|length}}个电影</p>
-    <ul>
+    <ul class="movie-list">
         {% for movie in movies %}
         <li>{{ movie.title }}--{{movie.year}}</li>
         {% endfor %}
