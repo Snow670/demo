@@ -13,7 +13,10 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = prefix + os.path.join(app.root_path,'data.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+
 db = SQLAlchemy(app)
+
+
 
 #models 数据层
 class User(db.Model):
@@ -33,16 +36,6 @@ class Movie(db.Model):
 #views 视图函数
 @app.route('/')
 def index():
-    # name = 'Snow'
-    # movies = [
-    #     {'title':'aa','year':'2020'},
-    #     {'title':'bb','year':'2019'},
-    #     {'title':'cc','year':'2018'},
-    #     {'title':'dd','year':'2017'},
-    #     {'title':'ee','year':'2020'},
-    #     {'title':'ff','year':'2010'},
-    #     {'title':'gg','year':'2019'},
-    # ]
     user = User.query.first()
     movies = Movie.query.all()
     return render_template('index.html',user=user,movies=movies)
@@ -61,7 +54,7 @@ def initdb(drop):
 
 
 
-#添加数据
+#向空数据库中添加数据
 @app.cli.command()
 def forge():
     name = 'Snow'
@@ -81,3 +74,10 @@ def forge():
         db.session.add(movie)
     db.session.commit()
     click.echo('导入数据完成')
+
+
+#错误处理函数
+@app.errorhandler(404)
+def page_not_find(e):
+    user = User.query.first()
+    return render_template('404.html',user=user)
