@@ -1,26 +1,12 @@
-<!DOCTYPE html>
-<html lang="zh">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css')}}">
-</head>
-<body>
-    <h2>
-        {{user.name}}
-        <img src="{{ url_for('static',filename='img/a.jpg')}}" alt="头像" class="avatar">
-    </h2>
-    <ul class="movie-list">
-       
-        <li>
-            页面走丢啦~~~ 404
-            <a href="{{url_for('index')}}">返回主页</a>
-        </li>
-        
-    </ul>
-    <footer>
-        <small>&copy;2020 &nbsp;&nbsp;&nbsp;<a href="#">1903c</a></small>
-    </footer>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+<ul class="movie-list">
+
+    <li>
+        页面走丢啦~~~ 404
+        <a href="{{url_for('index')}}">返回主页</a>
+    </li>
+
+</ul>
+{% endblock %}
