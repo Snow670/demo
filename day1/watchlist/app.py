@@ -1,4 +1,4 @@
-from flask import Flask,url_for,render_template
+from flask import Flask,url_for,render_template,request,redirect,flash
 from flask_sqlalchemy import SQLAlchemy
 import os,sys,click
 
@@ -8,11 +8,12 @@ if WIN:
     prefix = "sqlite:///"    #windows平台
 else:
     prefix = "sqlite:////"
+
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = prefix + os.path.join(app.root_path,'data.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
+app.config['SECRET_KEY'] = '1903_dev'
 
 db = SQLAlchemy(app)
 
@@ -30,13 +31,25 @@ class Movie(db.Model):
 
 
 
-
-
-
 #views 视图函数
-@app.route('/')
+@app.route('/',methods=["post","get"])
 def index():    
     movies = Movie.query.all()
+    if request.method == "POST":
+        # 获取表单的数据
+        title = request.form.get('title')
+        year = request.form.get('year')
+
+        # 验证数据
+        if not title or not year or len(title)>60 or len(year)>4:
+            flash("输入错误")
+            return redirect(url_for('index'))
+        # 将数据保存到数据库
+        movie = Movie(title=title,year=year)
+        db.session.add(movie)
+        db.session.commit()
+        flash("创建成功")
+        return redirect(url_for('index'))
     return render_template('index.html',movies=movies)
 
 
