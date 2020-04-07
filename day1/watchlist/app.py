@@ -53,6 +53,39 @@ def index():
     return render_template('index.html',movies=movies)
 
 
+#更新/movie/edit
+@app.route('/movie/edit/<int:movie_id>',methods=["post","get"])
+def edit(movie_id):
+    movie = Movie.query.get_or_404(movie_id)
+    if request.method == "POST":
+        # 获取表单的数据
+        title = request.form.get('title')
+        year = request.form.get('year')
+        # 验证数据
+        if not title or not year or len(title)>60 or len(year)>4:
+            flash("输入错误")
+            return redirect(url_for('edit'),movie_id=movie_id)
+        movie.title=title
+        movie.year=year
+        db.session.commit()
+        flash('电影更新完成')
+        return redirect(url_for('index'))
+    return render_template('edit.html',movie=movie)
+
+
+#删除/movie/delete
+@app.route('/movie/delete/<int:movie_id>',methods=["post","get"])
+def delete(movie_id):
+    movie = Movie.query.get_or_404(movie_id)
+    db.session.delete(movie)
+    db.session.commit()
+    flash("删除完成")
+    return redirect(url_for('index'))
+
+
+
+
+
 
 #自定义命令
 #建立空数据库
