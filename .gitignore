@@ -6,3 +6,5 @@ __pycache__
 env1
 .env
 *.db
+css
+fonts
