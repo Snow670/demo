@@ -1,39 +1,19 @@
 <!DOCTYPE html>
-
 <html lang="zh">
-
-
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>to do list</title>
-
     <link rel="stylesheet" href="css/bootstrap.min.css">
-
 </head>
-
-
-
 <body>
-
     <div class="container" id="app">
-
         <h2>
-
             <span>倒计时</span>
-
             <button class="btn btn-default" :disabled="state==='started'" v-on:click="start()">
-
                 <i class="glyphicon glyphicon-play"></i>
-
             </button>
-
             <button class="btn btn-default" :disabled="state!=='started'" v-on:click="pause()">
-
                 <i class="glyphicon glyphicon-pause"></i>
 
             </button>
