@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Base from './Base.vue'
 import VueRouter from 'vue-router'
 import IndexPage from './pages/index.vue'
-
+import mock from '../mock/mock.js'
 
 Vue.use(VueRouter)
 
